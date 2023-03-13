@@ -1,8 +1,16 @@
-from aiogram import Bot
-from aiogram.dispatcher import Dispatcher
-from aiogram.contrib.fsm_storage.memory import MemoryStorage
-from config import TOKEN
+from aiogram.utils import executor
+from utils.bot_commands import set_default_commands
+from loader import dp, bot
+from database import sqlite_db
 
-storage = MemoryStorage()
-bot = Bot(token=TOKEN, parse_mode="HTML")
-dp = Dispatcher(bot=bot, storage=storage)
+
+async def on_startup(_):
+    # await sqlite_db.db_start()
+    print("Bot has been started up")
+    print("DataBase is connected")
+
+
+if __name__ == '__main__':
+    async def start_bot_commands_menu():
+        await set_default_commands(bot)
+    executor.start_polling(dp, skip_updates=True, on_startup=on_startup)
