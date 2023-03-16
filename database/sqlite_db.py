@@ -1,22 +1,27 @@
 import sqlite3
+from typing import List
 
 
-async def db_start():
+async def db_connect() -> None:
     global base, cursor
-    base = sqlite3.connect('../database/request_history.db')
+    base = sqlite3.connect('database/custom_menu.db')
     cursor = base.cursor()
-    base.execute("CREATE TABLE IF NOT EXISTS log_data (user_id TEXT, user_name TEXT, code TEXT, request_time TEXT)")
+    base.execute("CREATE TABLE IF NOT EXISTS custom (key_number INTEGER PRIMARY KEY, city TEXT, airport TEXT)")
     base.commit()
 
 
-# async def create_data(user_id):
-#     user = cursor.execute(f"SELECT 1 FROM log_data WHERE user_id == {user_id}").fetchone()
-#     if not user:
-#         cursor.execute("INSERT INTO log_data VALUES(?, ?, ?, ?)", (user_id, user_name, '', ''))
-#         base.commit()
+async def get_custom_menu() -> List:
+    data = cursor.execute("SELECT * FROM custom").fetchall()
+    return data
 
 
-async def edit_data(state, user_id):
+async def create_custom_menu(state):
     async with state.proxy() as data:
-        cursor.execute(f"UPDATE log_data SET user_name = {data['name']}, code = {data['code']}, request_time = {data['time']} WHERE user_id == {user_id}")
+        custom_info = cursor.execute("INSERT INTO custom (city, airport) VALUES (?, ?)", (data['city'], data['airport']))
         base.commit()
+    return custom_info
+
+
+async def delete_city_from_custom_menu(key_number: int) -> None:
+    cursor.execute("DELETE FROM custom WHERE key_number = ?", key_number)
+    base.commit()

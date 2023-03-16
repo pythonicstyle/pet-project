@@ -1,9 +1,10 @@
+from datetime import datetime
 from loader import bot, dp
 from aiogram import types
 from keyboards.buttons import main_menu_kb
-from loguru import logger
+import logging
 
-# logger.add("info.log", format="{user mame} -- {user id} -- {action} -- {time}", level="INFO", rotation="1 mb", compression="zip")
+logging.basicConfig(level=logging.INFO)
 
 
 @dp.message_handler(commands=["start"])
@@ -14,3 +15,4 @@ async def start_command(message: types.Message) -> None:
     await bot.send_message(message.from_user.id,
                            text=f"{greeting}\nВыберите дальнейшее действие из меню или введите 4-х буквенный код аэропорта, например <b>UUEE</b>",
                            reply_markup=main_menu_kb())
+    logging.info(f"{user_id=} {user_fullname=} - {datetime.now()}")

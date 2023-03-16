@@ -11,7 +11,8 @@ def help_menu_ikb() -> InlineKeyboardMarkup:
                 InlineKeyboardButton(text="METAR decoding",
                                      url="https://skywaypublic.ru/publ/meteorologija/rasshifrovka_meteokoda_metar_shpargalka/6-1-0-40"),
                 InlineKeyboardButton(text="ICAO Airports",
-                                     url="http://www.flugzeuginfo.net/table_airportcodes_country-location_en.php")
+                                     url="http://www.flugzeuginfo.net/table_airportcodes_country-location_en.php"),
+                InlineKeyboardButton(text="🔑 Cheat sheet", callback_data="photo")
             ],
             [
                 InlineKeyboardButton(text="📌 Главное меню", callback_data="main_menu")
@@ -68,7 +69,7 @@ def city_menu__2_ikb() -> InlineKeyboardMarkup:
                 InlineKeyboardButton(text="Краснодар", callback_data="URKK"),
             ],
             [
-                InlineKeyboardButton(text="⬅️ Предыдущая страница", callback_data="main_menu"),
+                InlineKeyboardButton(text="⬅️ Предыдущая страница", callback_data="city_menu"),
                 InlineKeyboardButton(text="Следующая страница ➡️", callback_data="city_menu_3")
             ]
         ]
