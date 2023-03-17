@@ -14,6 +14,12 @@ logging.basicConfig(level=logging.ERROR)
 
 @dp.callback_query_handler()
 async def get_actual_weather(callback: types.CallbackQuery) -> None:
+    """
+    Функция обрабатывает любой callback запрос,
+    который не был обработан другими хэндлерами
+    и выводит пользователю следующее меню
+    либо информацию о погоде на выбранном аэропорту
+    """
     if callback.data == "sub_menu":
         await callback.message.edit_reply_markup(reply_markup=moscow_airports_menu_ikb())
     elif callback.data == "city_menu":
@@ -54,7 +60,13 @@ async def get_actual_weather(callback: types.CallbackQuery) -> None:
 
 @dp.message_handler()
 async def actual_weather_func(message: types.Message) -> None:
-    if len(message.text) == 4:
+    """
+    Функция обрабатывает любое сообщение пользователя,
+    которое не было обработано другими хэндлерами и
+    выводит пользователю информацию о погоде
+    либо сообщение об ошибке.
+    """
+    if len(message.text) == 4 and message.text.isalpha():
         response = requests.request(method='GET',
                                     url=f'https://api.checkwx.com/metar/{message.text}/decoded',
                                     headers={'X-API-Key': API_KEY})
@@ -74,4 +86,5 @@ async def actual_weather_func(message: types.Message) -> None:
             await message.answer("Ничего не найдено, попробуйте еще раз.")
             logging.error(f"user_id={message.from_user.id} user={message.from_user.full_name} - request={message.text}")
     else:
-        await message.answer("Введите 4-х буквенный код ИКАО или воспользуйтесь меню.")
+        await message.answer("Это не похоже на аббревиатуру кода 🤔\n"
+                             "Введите 4-х буквенный код ИКАО или воспользуйтесь меню.")

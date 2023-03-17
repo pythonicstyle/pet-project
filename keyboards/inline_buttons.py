@@ -1,6 +1,7 @@
 from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from aiogram.utils.callback_data import CallbackData
 
+
 users_cb = CallbackData('user', 'id', 'action')
 
 
@@ -112,13 +113,14 @@ def city_menu__4_ikb() -> InlineKeyboardMarkup:
         inline_keyboard=[
             [
                 InlineKeyboardButton(text="Псков", callback_data="ULOO"),
-                InlineKeyboardButton(text="Тюмень", callback_data="USTR"),
-                InlineKeyboardButton(text="Ульяновск", callback_data="UWLL")
+                InlineKeyboardButton(text="Самара", callback_data="UWWW"),
+                InlineKeyboardButton(text="Тюмень", callback_data="USTR")
+
             ],
             [
+                InlineKeyboardButton(text="Ульяновск", callback_data="UWLL"),
                 InlineKeyboardButton(text="Уфа", callback_data="UWUU"),
                 InlineKeyboardButton(text="Ханты-Мансийск", callback_data="USHH"),
-                InlineKeyboardButton(text="Самара", callback_data="UWWW")
             ],
             [
                 InlineKeyboardButton(text="Чебоксары", callback_data="UWKS"),

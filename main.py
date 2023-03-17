@@ -1,4 +1,5 @@
 from aiogram.utils import executor
+
 from utils.bot_commands import set_default_commands
 from loader import dp, bot
 from database import sqlite_db
